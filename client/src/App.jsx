@@ -12,7 +12,7 @@ export default function App() {
     <div className="min-h-screen bg-slate-50 text-slate-900">
       <header className="bg-white border-b border-slate-200">
         <nav className="max-w-5xl mx-auto flex items-center gap-2 px-4 py-3">
-          <span className="font-bold text-indigo-600 mr-4">🎙 VoiceScribe</span>
+          <span className="font-bold text-indigo-600 mr-4">🎙 BhashaVoice</span>
           <NavLink to="/" end className={linkClass}>
             Record
           </NavLink>

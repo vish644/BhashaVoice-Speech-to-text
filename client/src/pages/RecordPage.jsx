@@ -1,14 +1,14 @@
 import { useRef, useState } from "react";
 import { createTranscription, errMsg } from "../api";
-import { useTranscriber } from "../hooks/useTranscriber.js"; // your Phase 2 logic
+import useTranscriber from "../hooks/useTranscriber";
 
 export default function RecordPage() {
   const {
     text,
     setText,
-    listening,
     start,
     stop,
+    recording,
     error: micError,
   } = useTranscriber();
   const [title, setTitle] = useState("");
@@ -56,21 +56,21 @@ export default function RecordPage() {
 
       <div className="my-6 flex flex-col items-center gap-3">
         <button
-          onClick={listening ? handleStop : handleStart}
+          onClick={recording ? handleStop : handleStart}
           className={`relative flex h-20 w-20 items-center justify-center rounded-full text-3xl text-white shadow-lg transition focus:outline-none focus:ring-4 ${
-            listening
+            recording
               ? "bg-red-500 hover:bg-red-600 focus:ring-red-200"
               : "bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-200"
           }`}
-          aria-label={listening ? "Stop recording" : "Start recording"}
+          aria-label={recording ? "Stop recording" : "Start recording"}
         >
-          {listening && (
+          {recording && (
             <span className="absolute inset-0 animate-ping rounded-full bg-red-400 opacity-40" />
           )}
-          <span className="relative">{listening ? "⏹" : "🎙"}</span>
+          <span className="relative">{recording ? "⏹" : "🎙"}</span>
         </button>
         <span className="text-sm font-medium text-slate-600">
-          {listening ? "Listening… tap to stop" : "Tap to start recording"}
+          {recording ? "Listening… tap to stop" : "Tap to start recording"}
         </span>
       </div>
 
@@ -103,7 +103,7 @@ export default function RecordPage() {
 
       <button
         onClick={save}
-        disabled={saving || listening || !text.trim()}
+        disabled={saving || recording || !text.trim()}
         className="mt-5 w-full rounded-lg bg-indigo-600 py-2.5 font-semibold text-white transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:bg-slate-300"
       >
         {saving ? "Saving…" : "Save transcription"}
